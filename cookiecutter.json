@@ -4,5 +4,13 @@
     "author_name": "Your Name",
     "author_email": "your.email@example.com",
     "description": "A Django REST API project",
-    "database": ["sqlite3", "postgresql"]
+    "database": [
+        "sqlite3",
+        "postgresql"
+    ],
+    "postgres_db_name": "{{ cookiecutter.project_slug.replace('-', '_') }}",
+    "postgres_user": "postgres",
+    "postgres_password": "password",
+    "postgres_host": "localhost",
+    "postgres_port": "5432"
 }
