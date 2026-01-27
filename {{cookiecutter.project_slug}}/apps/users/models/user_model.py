@@ -75,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         self.save()
 
-            def generate_mfa_token(self):
+    def generate_mfa_token(self):
         """Generate a temporary token after successful password verification.
         This token is required to complete MFA verification."""
         self.mfa_token = secrets.token_urlsafe(32)
