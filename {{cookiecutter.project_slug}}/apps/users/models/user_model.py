@@ -51,6 +51,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     otp = models.CharField(max_length=5, blank=True, null=True)
     otp_created_at = models.DateTimeField(blank=True, null=True)
     is_verified = models.BooleanField(default=False) # DEFAULT SHOULD BE FALSE | Set True to not use is_verified
+
+    mfa_secret = models.CharField(max_length=50, blank=True, null=True)
+    mfs_enabled = models.BooleanField(default=False)
+
+    # Temporary token for MFA verification (issued after password check)
+    mfa_token = models.CharField(max_length=64, blank=True, null=True)
+    mfa_token_created_at = models.DateTimeField(blank=True, null=True)
     
     objects = UserManager()
 
@@ -67,6 +74,37 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.otp_created_at = timezone.now()
 
         self.save()
+
+            def generate_mfa_token(self):
+        """Generate a temporary token after successful password verification.
+        This token is required to complete MFA verification."""
+        self.mfa_token = secrets.token_urlsafe(32)
+        self.mfa_token_created_at = timezone.now()
+        self.save()
+        return self.mfa_token
+
+    def verify_mfa_token(self, token):
+        """Verify the temporary MFA token. Token expires after 5 minutes."""
+        if not self.mfa_token or not self.mfa_token_created_at:
+            return False
+
+        # Token expires after 5 minutes (300 seconds)
+        elapsed = (timezone.now() - self.mfa_token_created_at).total_seconds()
+        if elapsed > 300:
+            self.clear_mfa_token()
+            return False
+
+        if self.mfa_token != token:
+            return False
+
+        return True
+
+    def clear_mfa_token(self):
+        """Clear the MFA token after successful verification or expiration."""
+        self.mfa_token = None
+        self.mfa_token_created_at = None
+        self.save()
+
 
 
         subject = "Please Verify this OTP code"
