@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -141,6 +142,14 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day',
+    },
 }
 
 SPECTACULAR_SETTINGS = {
@@ -177,4 +186,49 @@ LOGGING = {
             "style": "{",
         }
     },
+}
+
+
+# increase acces token time to one day and incresae refersh token to 7 days
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379, 1)],
+        },
+    },
+}
+
+
+# Django-Q2 Configuration
+Q_CLUSTER = {
+    'name': '{{cookiecutter.project_name}}',
+    'workers': 4,  # Number of worker processes
+    'timeout': 220,  # Seconds before a task is considered failed
+    'retry': 520,  # Seconds to wait before retrying a task
+    'queue_limit': 50,
+    'bulk': 10,
+    # 'orm': 'default',  # Use the default Django ORM database
+    'redis': {
+        'host': '127.0.0.1',
+        'port': 6379,
+        'db': 0,
+    },
+    'scheduler': True,
+
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
 }
