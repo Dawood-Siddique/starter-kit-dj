@@ -11,3 +11,5 @@ tmp.ipynb
 
 logs/*
 !logs/.gitkeep
+
+.env
