@@ -77,8 +77,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = '{{cookiecutter.project_name}}.wsgi.application'
-ASGI_APPLICATION = '{{cookiecutter.project_name}}.asgi.application'
-
 
 
 # Database
