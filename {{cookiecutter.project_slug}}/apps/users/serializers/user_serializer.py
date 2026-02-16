@@ -36,7 +36,17 @@ class LoginSerializer(serializers.ModelSerializer):
         user = authenticate(email=data['email'], password=data['password'])
 
         if not user:
-            raise serializers.ValidationError('Invalid Email or Password')
+            raise serializers.ValidationError({
+                'message': 'Invalid Email or Password',
+            })
+
+        # Check if the user is active
+        if not user.is_superuser and not user.is_verified:
+            raise serializers.ValidationError({
+                'message': 'Email is not Verified',
+                'is_verified': False,
+                'email': user.email
+            })
 
         # Check if MFA is enabled for this user
         if user.mfa_secret and user.mfs_enabled:
@@ -48,11 +58,13 @@ class LoginSerializer(serializers.ModelSerializer):
                 'message': 'MFA verification required. Please provide OTP.',
             }
 
-        # Generate tokens (MFA not enabled)
         tokens = RefreshToken.for_user(user)
         return {
             'refresh': str(tokens),
             'access': str(tokens.access_token),
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
             'is_admin': True if user.is_superuser else False,
             'id': user.id,
         }

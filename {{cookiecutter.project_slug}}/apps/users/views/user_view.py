@@ -34,15 +34,16 @@ class RegisterView(APIView):
 
 
 class LoginView(APIView):
-    serializer_class = LoginSerializer
-
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
 
         if serializer.is_valid():
             return Response(serializer.validated_data, status=HTTP_200_OK)
         else:
-            return Response(serializer.errors, status=HTTP_401_UNAUTHORIZED)
+            errors = serializer.errors
+            if isinstance(errors, dict) and 'is_verified' in errors:
+                return Response(errors, status=HTTP_403_FORBIDDEN)
+            return Response(errors, status=HTTP_401_UNAUTHORIZED)
 
 
 class VerifyOtpView(APIView):
