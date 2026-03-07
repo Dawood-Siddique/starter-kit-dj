@@ -338,6 +338,49 @@ wheels = [
 ]
 
 [[package]]
+name = "djangoapi"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "channels" },
+    { name = "channels-redis" },
+    { name = "daphne" },
+    { name = "django" },
+    { name = "django-cors-headers" },
+    { name = "django-q2" },
+    { name = "django-redis" },
+    { name = "djangorestframework" },
+    { name = "djangorestframework-simplejwt" },
+    { name = "drf-spectacular", extra = ["sidecar"] },
+    { name = "google-auth" },
+    { name = "gunicorn" },
+    { name = "psycopg2-binary" },
+    { name = "pyotp" },
+    { name = "python-dotenv" },
+    { name = "uvicorn" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "channels", specifier = ">=4.3.2" },
+    { name = "channels-redis", specifier = ">=4.3.0" },
+    { name = "daphne", specifier = ">=4.2.1" },
+    { name = "django", specifier = ">=5.2.4" },
+    { name = "django-cors-headers", specifier = ">=4.7.0" },
+    { name = "django-q2", specifier = ">=1.9.0" },
+    { name = "django-redis", specifier = ">=6.0.0" },
+    { name = "djangorestframework", specifier = ">=3.16.0" },
+    { name = "djangorestframework-simplejwt", specifier = ">=5.5.0" },
+    { name = "drf-spectacular", extras = ["sidecar"], specifier = ">=0.28.0" },
+    { name = "google-auth", specifier = ">=2.49.0" },
+    { name = "gunicorn", specifier = ">=24.1.1" },
+    { name = "psycopg2-binary", specifier = ">=2.9.11" },
+    { name = "pyotp", specifier = ">=2.9.0" },
+    { name = "python-dotenv", specifier = ">=1.2.2" },
+    { name = "uvicorn", specifier = ">=0.40.0" },
+]
+
+[[package]]
 name = "djangorestframework"
 version = "3.16.0"
 source = { registry = "https://pypi.org/simple" }
@@ -395,6 +438,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/59/50/1fc35f5322b4f73989be9d6a5b0fda4312d12035575327a69d157d39a8e7/drf_spectacular_sidecar-2025.7.1.tar.gz", hash = "sha256:03b4a9f2062115f69ce24509d855b180244d58ef45edd67ea8bcb214c7021e10", size = 2407526, upload-time = "2025-07-01T11:25:27.081Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a3/d4/a7e27baaea5f0dd84a500e598b3f31ca66ea28ad5d64ee679e821bbd7ac2/drf_spectacular_sidecar-2025.7.1-py3-none-any.whl", hash = "sha256:efe33ba696ba25f28c32ead75b56e3ef68f167b9ed7468f8d16322bfe8e304e7", size = 2427629, upload-time = "2025-07-01T11:25:25.45Z" },
+]
+
+[[package]]
+name = "google-auth"
+version = "2.49.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cryptography" },
+    { name = "pyasn1-modules" },
+    { name = "rsa" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7d/59/7371175bfd949abfb1170aa076352131d7281bd9449c0f978604fc4431c3/google_auth-2.49.0.tar.gz", hash = "sha256:9cc2d9259d3700d7a257681f81052db6737495a1a46b610597f4b8bafe5286ae", size = 333444, upload-time = "2026-03-06T21:53:06.07Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/37/45/de64b823b639103de4b63dd193480dce99526bd36be6530c2dba85bf7817/google_auth-2.49.0-py3-none-any.whl", hash = "sha256:f893ef7307f19cf53700b7e2f61b5a6affe3aa0edf9943b13788920ab92d8d87", size = 240676, upload-time = "2026-03-06T21:52:38.304Z" },
 ]
 
 [[package]]
@@ -649,6 +706,15 @@ wheels = [
 ]
 
 [[package]]
+name = "python-dotenv"
+version = "1.2.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/82/ed/0301aeeac3e5353ef3d94b6ec08bbcabd04a72018415dcb29e588514bba8/python_dotenv-1.2.2.tar.gz", hash = "sha256:2c371a91fbd7ba082c2c1dc1f8bf89ca22564a087c2c287cd9b662adde799cf3", size = 50135, upload-time = "2026-03-01T16:00:26.196Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0b/d7/1959b9648791274998a9c3526f6d0ec8fd2233e4d4acce81bbae76b44b2a/python_dotenv-1.2.2-py3-none-any.whl", hash = "sha256:1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a", size = 22101, upload-time = "2026-03-01T16:00:25.09Z" },
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -774,6 +840,18 @@ wheels = [
 ]
 
 [[package]]
+name = "rsa"
+version = "4.9.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyasn1" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/da/8a/22b7beea3ee0d44b1916c0c1cb0ee3af23b700b6da9f04991899d0c555d4/rsa-4.9.1.tar.gz", hash = "sha256:e7bdbfdb5497da4c07dfd35530e1a902659db6ff241e39d9953cad06ebd0ae75", size = 29034, upload-time = "2025-04-16T09:51:18.218Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/64/8d/0133e4eb4beed9e425d9a98ed6e081a55d195481b7632472be1af08d2f6b/rsa-4.9.1-py3-none-any.whl", hash = "sha256:68635866661c6836b8d39430f97a996acbd61bfa49406748ea243539fe239762", size = 34696, upload-time = "2025-04-16T09:51:17.142Z" },
+]
+
+[[package]]
 name = "service-identity"
 version = "24.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -795,45 +873,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/e5/40/edede8dd6977b0d3da179a342c198ed100dd2aba4be081861ee5911e4da4/sqlparse-0.5.3.tar.gz", hash = "sha256:09f67787f56a0b16ecdbde1bfc7f5d9c3371ca683cfeaa8e6ff60b4807ec9272", size = 84999, upload-time = "2024-12-10T12:05:30.728Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a9/5c/bfd6bd0bf979426d405cc6e71eceb8701b148b16c21d2dc3c261efc61c7b/sqlparse-0.5.3-py3-none-any.whl", hash = "sha256:cf2196ed3418f3ba5de6af7e82c694a9fbdbfecccdfc72e281548517081f16ca", size = 44415, upload-time = "2024-12-10T12:05:27.824Z" },
-]
-
-[[package]]
-name = "test"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "channels" },
-    { name = "channels-redis" },
-    { name = "daphne" },
-    { name = "django" },
-    { name = "django-cors-headers" },
-    { name = "django-q2" },
-    { name = "django-redis" },
-    { name = "djangorestframework" },
-    { name = "djangorestframework-simplejwt" },
-    { name = "drf-spectacular", extra = ["sidecar"] },
-    { name = "gunicorn" },
-    { name = "psycopg2-binary" },
-    { name = "pyotp" },
-    { name = "uvicorn" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "channels", specifier = ">=4.3.2" },
-    { name = "channels-redis", specifier = ">=4.3.0" },
-    { name = "daphne", specifier = ">=4.2.1" },
-    { name = "django", specifier = ">=5.2.4" },
-    { name = "django-cors-headers", specifier = ">=4.7.0" },
-    { name = "django-q2", specifier = ">=1.9.0" },
-    { name = "django-redis", specifier = ">=6.0.0" },
-    { name = "djangorestframework", specifier = ">=3.16.0" },
-    { name = "djangorestframework-simplejwt", specifier = ">=5.5.0" },
-    { name = "drf-spectacular", extras = ["sidecar"], specifier = ">=0.28.0" },
-    { name = "gunicorn", specifier = ">=24.1.1" },
-    { name = "psycopg2-binary", specifier = ">=2.9.11" },
-    { name = "pyotp", specifier = ">=2.9.0" },
-    { name = "uvicorn", specifier = ">=0.40.0" },
 ]
 
 [[package]]
