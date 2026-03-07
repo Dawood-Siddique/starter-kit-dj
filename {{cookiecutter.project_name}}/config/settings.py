@@ -88,7 +88,7 @@ ASGI_APPLICATION = 'config.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-{ % if cookiecutter.database == "postgresql" % }
+{% if cookiecutter.database == "postgresql" %}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -99,14 +99,14 @@ DATABASES = {
         'PORT': '{{cookiecutter.postgres_port}}',
     }
 }
-{ % else % }
+{% else %}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-{ % endif % }
+{% endif %}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -158,7 +158,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'config',
-    'DESCRIPTION': '{{cookiecutter.description}}',
+    'DESCRIPTION': 'Description Here',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,  # optionally disable raw schema endpoint
     'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
