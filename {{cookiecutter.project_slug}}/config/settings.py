@@ -87,7 +87,7 @@ ASGI_APPLICATION = 'config.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-{ % if cookiecutter.database == "postgresql" % }
+{% if cookiecutter.database == "postgresql" %}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -98,14 +98,14 @@ DATABASES = {
         'PORT': '{{cookiecutter.postgres_port}}',
     }
 }
-{ % else % }
+{% else %}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-{ % endif % }
+{% endif %}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -133,12 +133,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
