@@ -14,7 +14,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'users.User'
-CSRF_TRUSTED_ORIGINS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "https://localhost:3000", "http://localhost:8000",
+                        "https://localhost:8000", "http://localhost:5173", "https://localhost:5173"]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -87,7 +88,7 @@ ASGI_APPLICATION = 'config.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-{% if cookiecutter.database == "postgresql" %}
+{ % if cookiecutter.database == "postgresql" % }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -98,14 +99,14 @@ DATABASES = {
         'PORT': '{{cookiecutter.postgres_port}}',
     }
 }
-{% else %}
+{ % else % }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-{% endif %}
+{ % endif % }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
