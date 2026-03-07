@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = '{{config}}.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -80,8 +80,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = '{{config}}.wsgi.application'
-ASGI_APPLICATION = '{{config}}.asgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
 
 
 # Database
@@ -162,7 +162,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': '{{config}}',
+    'TITLE': 'config',
     'DESCRIPTION': '{{cookiecutter.description}}',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,  # optionally disable raw schema endpoint
@@ -216,7 +216,7 @@ CHANNEL_LAYERS = {
 
 # Django-Q2 Configuration
 Q_CLUSTER = {
-    'name': '{{config}}',
+    'name': 'config',
     'workers': 4,  # Number of worker processes
     'timeout': 220,  # Seconds before a task is considered failed
     'retry': 520,  # Seconds to wait before retrying a task

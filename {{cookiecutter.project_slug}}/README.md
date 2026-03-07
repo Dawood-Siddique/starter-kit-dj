@@ -1,4 +1,4 @@
-# {{config}}
+# config
 
 {{cookiecutter.description}}
 
