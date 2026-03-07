@@ -1,5 +1,6 @@
 {
-    "project_name": "Django_API",
+    "project_name": "My Django API",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-').replace('_', '-') }}",
     "author_name": "Your Name",
     "author_email": "your.email@example.com",
     "description": "A Django REST API project",
