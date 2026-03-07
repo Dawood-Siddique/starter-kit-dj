@@ -14,7 +14,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'users.User'
-CSRF_TRUSTED_ORIGINS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -84,11 +84,10 @@ WSGI_APPLICATION = '{{cookiecutter.project_name}}.wsgi.application'
 ASGI_APPLICATION = '{{cookiecutter.project_name}}.asgi.application'
 
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-{% if cookiecutter.database == "postgresql" %}
+{ % if cookiecutter.database == "postgresql" % }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -99,14 +98,14 @@ DATABASES = {
         'PORT': '{{cookiecutter.postgres_port}}',
     }
 }
-{% else %}
+{ % else % }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-{% endif %}
+{ % endif % }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -147,8 +146,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -166,7 +163,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': '{{cookiecutter.project_name}}',
-    'DESCRIPTION': '{{cookiecutter.description}}',
+    'DESCRIPTION': 'Project Description',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,  # optionally disable raw schema endpoint
     'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead

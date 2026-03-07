@@ -1,7 +1,5 @@
 # {{cookiecutter.project_name}}
 
-{{cookiecutter.description}}
-
 ## Features
 
 - Django REST Framework
@@ -83,6 +81,3 @@ Once the server is running, visit:
 - Swagger UI: http://localhost:8000/api/docs/
 - ReDoc: http://localhost:8000/api/redoc/
 
-## Author
-
-{{cookiecutter.author_name}} ({{cookiecutter.author_email}})
