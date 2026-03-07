@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = '{{cookiecutter.project_name}}.urls'
+ROOT_URLCONF = '{{config}}.urls'
 
 TEMPLATES = [
     {
@@ -80,15 +80,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = '{{cookiecutter.project_name}}.wsgi.application'
-ASGI_APPLICATION = '{{cookiecutter.project_name}}.asgi.application'
-
+WSGI_APPLICATION = '{{config}}.wsgi.application'
+ASGI_APPLICATION = '{{config}}.asgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-{% if cookiecutter.database == "postgresql" %}
+{ % if cookiecutter.database == "postgresql" % }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -99,14 +98,14 @@ DATABASES = {
         'PORT': '{{cookiecutter.postgres_port}}',
     }
 }
-{% else %}
+{ % else % }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-{% endif %}
+{ % endif % }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -147,8 +146,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -165,7 +162,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': '{{cookiecutter.project_name}}',
+    'TITLE': '{{config}}',
     'DESCRIPTION': '{{cookiecutter.description}}',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,  # optionally disable raw schema endpoint
@@ -219,7 +216,7 @@ CHANNEL_LAYERS = {
 
 # Django-Q2 Configuration
 Q_CLUSTER = {
-    'name': '{{cookiecutter.project_name}}',
+    'name': '{{config}}',
     'workers': 4,  # Number of worker processes
     'timeout': 220,  # Seconds before a task is considered failed
     'retry': 520,  # Seconds to wait before retrying a task

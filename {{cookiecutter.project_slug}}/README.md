@@ -1,4 +1,4 @@
-# {{cookiecutter.project_name}}
+# {{config}}
 
 {{cookiecutter.description}}
 
@@ -10,16 +10,17 @@
 - API Documentation with Swagger
 - CORS support
 - Modern Python dependency management with uv
-{% if cookiecutter.database == "postgresql" %}
+  {% if cookiecutter.database == "postgresql" %}
 - PostgreSQL database support
-{% else %}
+  {% else %}
 - SQLite database (development-ready)
-{% endif %}
+  {% endif %}
 
 ## Database Configuration
 
 {% if cookiecutter.database == "postgresql" %}
 This project is configured to use PostgreSQL with the following settings:
+
 - Database: {{cookiecutter.postgres_db_name}}
 - Host: {{cookiecutter.postgres_host}}
 - Port: {{cookiecutter.postgres_port}}
@@ -34,45 +35,49 @@ The database file will be created automatically when you run migrations.
 ## Installation
 
 1. Install dependencies:
+
 ```bash
 uv sync
 ```
 
-{% if cookiecutter.database == "postgresql" %}
-2. Set up PostgreSQL database:
-   - Ensure PostgreSQL is installed and running
-   - Create the database:
-   ```bash
-   createdb {{cookiecutter.postgres_db_name}}
-   ```
-   - Or using psql:
-   ```sql
-   CREATE DATABASE {{cookiecutter.postgres_db_name}};
-   ```
-   - Update database credentials in settings.py if needed
+{% if cookiecutter.database == "postgresql" %} 2. Set up PostgreSQL database:
+
+- Ensure PostgreSQL is installed and running
+- Create the database:
+
+```bash
+createdb {{cookiecutter.postgres_db_name}}
+```
+
+- Or using psql:
+
+```sql
+CREATE DATABASE {{cookiecutter.postgres_db_name}};
+```
+
+- Update database credentials in settings.py if needed
 
 3. Run migrations:
-{% else %}
-2. Run migrations:
-{% endif %}
+   {% else %}
+4. Run migrations:
+   {% endif %}
+
 ```bash
 uv run python manage.py migrate
 ```
 
-{% if cookiecutter.database == "postgresql" %}
-4. Create a superuser:
-{% else %}
-3. Create a superuser:
+{% if cookiecutter.database == "postgresql" %} 4. Create a superuser:
+{% else %} 3. Create a superuser:
 {% endif %}
+
 ```bash
 uv run python manage.py createsuperuser
 ```
 
-{% if cookiecutter.database == "postgresql" %}
-5. Start the development server:
-{% else %}
-4. Start the development server:
+{% if cookiecutter.database == "postgresql" %} 5. Start the development server:
+{% else %} 4. Start the development server:
 {% endif %}
+
 ```bash
 uv run python manage.py runserver
 ```
@@ -80,6 +85,7 @@ uv run python manage.py runserver
 ## API Documentation
 
 Once the server is running, visit:
+
 - Swagger UI: http://localhost:8000/api/docs/
 - ReDoc: http://localhost:8000/api/redoc/
 
