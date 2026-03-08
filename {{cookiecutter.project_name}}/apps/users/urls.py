@@ -12,6 +12,7 @@ from .views.user_view import (
     EnableMfaView,
     VerifyMfaView,
     DisableMfaView,
+    GoogleSignInView,
 )
 
 user = [
@@ -26,6 +27,7 @@ user = [
     path('enable_mfa/', EnableMfaView.as_view(), name='enable-mfa'),
     path('verify_mfa/', VerifyMfaView.as_view(), name='verify-mfa'),
     path('disable_mfa/', DisableMfaView.as_view(), name='disable-mfa'),
+    path('google/', GoogleSignInView.as_view(), name='google-sign-in'),
 
 ]
 
