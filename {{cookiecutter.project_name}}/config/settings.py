@@ -1,15 +1,20 @@
-from pathlib import Path
 import os
+from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables
+load_dotenv(BASE_DIR / '.env')
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^=+rzth-e=k#nprf*jhdk7(d)y^cb9ufwqvy12v-ky-80t@p4x'
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY', 'django-insecure-^=+rzth-e=k#nprf*jhdk7(d)y^cb9ufwqvy12v-ky-80t@p4x')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -237,3 +242,5 @@ CACHES = {
         }
     }
 }
+
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
