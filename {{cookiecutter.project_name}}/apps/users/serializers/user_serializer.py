@@ -157,3 +157,17 @@ class GoogleSignInSerializer(serializers.Serializer):
             'last_name': user.last_name,
             'email': user.email,
         }
+
+
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+
+    def validate(self, attrs):
+        self.token = attrs['refresh']
+        return attrs
+
+    def save(self, **kwargs):
+        try:
+            RefreshToken(self.token).blacklist()
+        except Exception as e:
+            raise serializers.ValidationError({'refresh': [str(e)]})

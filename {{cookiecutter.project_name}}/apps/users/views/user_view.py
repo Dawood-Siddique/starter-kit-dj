@@ -12,6 +12,7 @@ from apps.users.serializers.user_serializer import (
     ResetPasswordWithOtpSerializer,
     ChangePasswordSerializer,
     GoogleSignInSerializer,
+    LogoutSerializer,
 )
 
 import pyotp
@@ -235,3 +236,15 @@ class GoogleSignInView(APIView):
         if serializer.is_valid():
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = LogoutSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response({"message": "Successfully logged out."}, status=status.HTTP_200_OK)
