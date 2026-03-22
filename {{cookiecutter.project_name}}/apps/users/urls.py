@@ -13,10 +13,13 @@ from .views.user_view import (
     VerifyMfaView,
     DisableMfaView,
     GoogleSignInView,
+    LogoutView,
 )
 
 user = [
     path('login/', LoginView.as_view(), name='user-login'),
+    path('logout/', LogoutView.as_view(), name='user-logout'),
+
     path('register/', RegisterView.as_view(), name='user-register'),
     path('refresh/', TokenRefreshView.as_view(), name='user-refresh'),
     path('verify_otp/', VerifyOtpView.as_view(), name='verify-otp'),
