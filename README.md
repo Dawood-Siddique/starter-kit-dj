@@ -5,8 +5,9 @@ A Cookiecutter template for creating Django REST API projects with modern best p
 ## Features
 
 - Django REST Framework
-- JWT Authentication with SimpleJWT
-- Custom User Model with OTP functionality
+- Authentication with django-allauth (headless, API-only): email/password signup, email verification
+  and password reset by code, TOTP MFA, Google sign-in, JWT access/refresh tokens with rotation
+- Custom email-based User Model
 - API Documentation with drf-spectacular (Swagger/ReDoc)
 - CORS support
 - Modern Python dependency management with uv
@@ -45,8 +46,8 @@ The generated project includes:
 
 - **apps/**: Organized Django apps
 - **core/**: Django project settings and configuration
-- **Custom User Model**: Email-based authentication with OTP support
-- **API Views**: Ready-to-use authentication endpoints
+- **Custom User Model**: Email-based, no username
+- **Auth API**: django-allauth endpoints under `/_allauth/app/v1/`, documented at `/_allauth/openapi.html`
 - **Tests**: Basic test structure
 - **Modern tooling**: uv for dependency management
 
@@ -61,7 +62,7 @@ After generating your project:
 3. Run migrations: `uv run python manage.py migrate`
 4. Create superuser: `uv run python manage.py createsuperuser`
 5. Start server: `uv run python manage.py runserver`
-6. Visit API docs: http://localhost:8000/api/docs/
+6. Visit API docs: http://localhost:8000/api/docs/ (your API) and http://localhost:8000/_allauth/openapi.html (auth)
 
 ## License
 

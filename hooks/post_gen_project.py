@@ -25,6 +25,11 @@ def create_env_file():
         "# POSTGRES_PASSWORD={{ cookiecutter.postgres_password }}",
         "# POSTGRES_HOST={{ cookiecutter.postgres_host }}",
         "# POSTGRES_PORT={{ cookiecutter.postgres_port }}",
+        "# Website that auth emails link to (signup, password reset)",
+        "# FRONTEND_URL=http://localhost:3000",
+        "# Google sign-in",
+        "# GOOGLE_CLIENT_ID=",
+        "# GOOGLE_CLIENT_SECRET=",
     ]
 
     with open(".env", "w") as f:

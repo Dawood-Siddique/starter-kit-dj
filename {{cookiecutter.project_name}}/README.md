@@ -5,8 +5,9 @@ Description Here
 ## Features
 
 - Django REST Framework
-- JWT Authentication
-- Custom User Model with OTP functionality
+- Authentication with django-allauth (headless): email verification and password reset by code,
+  TOTP MFA, Google sign-in, JWT access/refresh tokens with rotation
+- Custom email-based User Model
 - API Documentation with Swagger
 - CORS support
 - Modern Python dependency management with uv
@@ -87,4 +88,5 @@ uv run python manage.py runserver
 Once the server is running, visit:
 
 - Swagger UI: http://localhost:8000/api/docs/
+- Auth API: http://localhost:8000/_allauth/openapi.html
 - ReDoc: http://localhost:8000/api/redoc/

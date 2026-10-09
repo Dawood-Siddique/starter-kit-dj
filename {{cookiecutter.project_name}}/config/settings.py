@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
-from datetime import timedelta
 from dotenv import load_dotenv
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +26,7 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = (*default_headers, 'x-session-token')  # allauth's app client sends it
 DJANGO_LOG_LEVEL = 'INFO'
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -47,8 +48,12 @@ INSTALLED_APPS = [
     # 3rd party packages
     'rest_framework',
     'corsheaders',
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.mfa',
+    'allauth.headless',
 
     'drf_spectacular',
     'drf_spectacular_sidecar',
@@ -70,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -151,7 +157,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'allauth.headless.contrib.rest_framework.authentication.JWTTokenAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_THROTTLE_CLASSES': (
@@ -201,14 +207,54 @@ LOGGING = {
 }
 
 
-# Enable JWT rotation and blacklisting for improved security
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'UPDATE_LAST_LOGIN': True,
+# Authentication is handled by django-allauth in headless (API-only) mode.
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_ADAPTER = 'apps.users.adapter.AccountAdapter'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*']
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+ACCOUNT_PASSWORD_RESET_BY_CODE_ENABLED = True
+
+HEADLESS_ONLY = True
+# Pages on the website that allauth's emails link to. HEADLESS_ONLY crashes without them.
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+HEADLESS_FRONTEND_URLS = {
+    'account_confirm_email': FRONTEND_URL + '/verify-email/{key}',
+    'account_reset_password': f'{FRONTEND_URL}/reset-password',
+    'account_reset_password_from_key': FRONTEND_URL + '/reset-password/{key}',
+    'account_signup': f'{FRONTEND_URL}/signup',
+    'socialaccount_login_error': f'{FRONTEND_URL}/login',
 }
+HEADLESS_SERVE_SPECIFICATION = True  # API docs at /_allauth/openapi.html
+HEADLESS_TOKEN_STRATEGY = 'allauth.headless.tokens.strategies.jwt.JWTTokenStrategy'
+HEADLESS_JWT_ALGORITHM = 'HS256'  # signed with SECRET_KEY
+HEADLESS_JWT_ACCESS_TOKEN_EXPIRES_IN = 15 * 60
+HEADLESS_JWT_REFRESH_TOKEN_EXPIRES_IN = 7 * 24 * 60 * 60
+HEADLESS_JWT_ROTATE_REFRESH_TOKEN = True
+HEADLESS_JWT_STATEFUL_VALIDATION_ENABLED = True  # logout invalidates access tokens immediately
+
+# Google sign-in: the frontend sends Google's id_token, allauth verifies it.
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APPS': [{
+            'client_id': os.environ.get('GOOGLE_CLIENT_ID', ''),
+            'secret': os.environ.get('GOOGLE_CLIENT_SECRET', ''),
+        }],
+        'SCOPE': ['profile', 'email'],
+    },
+}
+# Signing in with Google logs into the existing account with that email.
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 CHANNEL_LAYERS = {
@@ -248,5 +294,3 @@ CACHES = {
         }
     }
 }
-
-GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
